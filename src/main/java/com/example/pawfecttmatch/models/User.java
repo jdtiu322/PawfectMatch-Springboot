@@ -1,22 +1,20 @@
 package com.example.pawfecttmatch.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
 import java.util.Date;
-@Entity
+
 public class User {
-    private String userId;
+
     private String email;
     private String displayName;
-    private Dog dog;
-    private Swipe swipes;
-    private Match matches;
+    private String dogId; // Reference to the ID of the user's dog in Firestore
+    private String swipeId; // Reference to the ID of the user's swipe in Firestore
+    private String matchId; // Reference to the ID of the user's match in Firestore
     private Date createdAt;
     private Date updatedAt;
-    @Id
-    private String userID;
+    private String userId;
+    private String password;// ID of the user in Firestore
 
+    // Constructors, getters, and setters
 
     public String getEmail() {
         return email;
@@ -34,28 +32,28 @@ public class User {
         this.displayName = displayName;
     }
 
-    public Dog getDog() {
-        return dog;
+    public String getDogId() {
+        return dogId;
     }
 
-    public void setDog(Dog dog) {
-        this.dog = dog;
+    public void setDogId(String dogId) {
+        this.dogId = dogId;
     }
 
-    public Swipe getSwipes() {
-        return swipes;
+    public String getSwipeId() {
+        return swipeId;
     }
 
-    public void setSwipes(Swipe swipes) {
-        this.swipes = swipes;
+    public void setSwipeId(String swipeId) {
+        this.swipeId = swipeId;
     }
 
-    public Match getMatches() {
-        return matches;
+    public String getMatchId() {
+        return matchId;
     }
 
-    public void setMatches(Match matches) {
-        this.matches = matches;
+    public void setMatchId(String matchId) {
+        this.matchId = matchId;
     }
 
     public Date getCreatedAt() {
@@ -74,11 +72,19 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getUserID() {
-        return userID;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public String getPassword(){
+        return password;
     }
 }

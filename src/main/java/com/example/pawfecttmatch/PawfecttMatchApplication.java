@@ -6,23 +6,25 @@ import com.google.firebase.FirebaseOptions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 @SpringBootApplication
 public class PawfecttMatchApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PawfecttMatchApplication.class, args);
-		try {
-			FileInputStream serviceAccount = new FileInputStream("C:\\Users\\Joaquin David P. Tiu\\Downloads\\pawfecttmatch\\pawfecttmatch\\src\\main\\java\\com\\example\\pawfecttmatch\\serviceAccount.json");
+    public static void main(String[] args) throws IOException {
+        ClassLoader classLoader = PawfecttMatchApplication.class.getClassLoader();
 
-			FirebaseOptions options = new FirebaseOptions.Builder()
-					.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-					.setDatabaseUrl("https://pawfectmatch-172ef-default-rtdb.asia-southeast1.firebasedatabase.app")
-					.build();
-			FirebaseApp.initializeApp(options);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        // Load serviceAccountKey.json as input stream
+        InputStream serviceAccountStream = classLoader.getResourceAsStream("serviceAccountKey.json");
+
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccountStream))
+                .setDatabaseUrl("https://pawfectmatch-172ef-default-rtdb.asia-southeast1.firebasedatabase.app")
+                .build();
+
+        FirebaseApp.initializeApp(options);
+
+        SpringApplication.run(PawfecttMatchApplication.class, args);
+    }
 }
