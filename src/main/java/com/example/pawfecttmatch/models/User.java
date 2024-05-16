@@ -1,5 +1,6 @@
 package com.example.pawfecttmatch.models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,10 +15,9 @@ public class User {
     private String dogId;
     private String swipeId;
     private String matchId;
-    private Date createdAt;
-    private Date updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private String userId;
     private String password;
-    private String documentId;
-    
+
 }

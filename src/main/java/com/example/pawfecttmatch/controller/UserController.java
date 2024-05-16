@@ -2,7 +2,10 @@ package com.example.pawfecttmatch.controller;
 
 import java.util.concurrent.ExecutionException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,17 +18,21 @@ import com.example.pawfecttmatch.service.UserService;
 
 @RestController
 public class UserController {
+    
+    @Autowired
     public UserService userService;
 
     public UserController(UserService userService){
         this.userService = userService;
     }
-    
+
+  @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/create")
-    public String createUser(@RequestBody User user) throws InterruptedException, ExecutionException{
+    public String createUser(@RequestBody User user) throws InterruptedException, ExecutionException {
+        // Log the user object for debugging
+        System.out.println("Received user: " + user);
         return UserService.createUser(user);
     }
-        
     
     @GetMapping("/get")
     public User getUser(@RequestParam String documentId) throws InterruptedException, ExecutionException{
@@ -37,7 +44,7 @@ public class UserController {
         return UserService.updateUser(user);
     }
 
-    @PutMapping("/delete")
+    @DeleteMapping("/delete")
     public String deleteUser(@RequestBody String documentId) throws InterruptedException, ExecutionException{
         return UserService.deleteUser(documentId);
     }

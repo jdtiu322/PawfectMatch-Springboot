@@ -22,13 +22,15 @@ public class UserService {
     public static String createUser(User user) throws InterruptedException, ExecutionException {
 
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getUserId()).set(user);
         
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("users").document(user.getUserId()).set(user);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 
     public static User getUser(String documentId) throws InterruptedException, ExecutionException{
         Firestore dbFirestore = FirestoreClient.getFirestore();
+
+        
         DocumentReference documentReference = dbFirestore.collection("users").document(documentId);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot document = future.get();
