@@ -11,6 +11,9 @@ import lombok.Setter;
 public class User {
 
     private String email;
+    private String firstName;
+    private String lastName;
+    private String address;
     private String displayName;
     private String dogId;
     private String swipeId;

@@ -17,11 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.pawfecttmatch.models.User;
 import com.example.pawfecttmatch.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @RestController
 public class UserController {
     
     @Autowired
     public UserService userService;
+    @Autowired
+    private HttpSession httpSession;
+
 
     public UserController(UserService userService){
         this.userService = userService;
@@ -63,6 +68,8 @@ public class UserController {
             User authenticatedUser = userService.getUserByEmailAndPassword(user.getEmail(), user.getPassword());
             if (authenticatedUser != null) {
                 // User authenticated successfully
+                // Store userId in session
+                httpSession.setAttribute("userId", authenticatedUser.getUserId());
                 return ResponseEntity.ok("Login successful for user: " + authenticatedUser.getDisplayName());
             } else {
                 // Authentication failed
@@ -72,4 +79,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during authentication");
         }
     }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/get-user-id")
+    public ResponseEntity<String> getUserId() {
+        // Retrieve userId from session
+        String userId = (String) httpSession.getAttribute("userId");
+        if (userId != null) {
+            return ResponseEntity.ok(userId);
+        } else {
+            // User not logged in
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+        }
+    }
+
 }
